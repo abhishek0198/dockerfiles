@@ -53,15 +53,14 @@ function showUsageAndExit () {
     echo "[OPTIONAL] The keystore password if SecureVault was enabled in the product."
     echo -en "  -m\t"
     echo "[OPTIONAL] Full path of the host location to share with containers."
-    echo -en "  -s\t"
-    echo "[OPTIONAL] Silently run the profiles without asking for interactive options."
     echo
+
     echoBold "Ex: ./run.sh -v 1.9.1 -l 'manager' -k 'wso2carbon'"
     echo
     exit 1
 }
 
-while getopts :n:v:i:o:p:l:k:m:s: FLAG; do
+while getopts :n:v:i:o:p:l:k:m: FLAG; do
     case $FLAG in
         n)
             product_name=$OPTARG
@@ -86,8 +85,6 @@ while getopts :n:v:i:o:p:l:k:m:s: FLAG; do
             ;;
         m)
             host_shared_dir_path=$OPTARG
-            ;;
-        s)  silent_run=$OPTARG
             ;;
         \?)
             showUsageAndExit
@@ -169,7 +166,7 @@ do
     sleep 1
 done
 
-if [ -z silent_run ] && [ "${#profiles_array[@]}" -eq 1 ]; then
+if [ "${#profiles_array[@]}" -eq 1 ]; then
     echo
     askBold "Connect to the spawned container? (y/n): "
     read -r exec_v
